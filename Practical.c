@@ -2,7 +2,7 @@
  *      www.emthink.com
  *      (C)2016 Cortex-Mx Practical Course
  *
- * FILE: Practical.c for 5-RTX
+ * FILE: Practical.c for 6-HID
  *----------------------------------------------------------------------------*/
 
 #define __MASTER_FILE
@@ -30,12 +30,27 @@ int main (void) {
   GLCD_ClearScreen();                     /* Clear the GLCD               */
   GLCD_SetFont(&GLCD_Font_16x24);
   GLCD_DrawString(0, 4*GLCD_Font_16x24.height, "CM Practical Course ");
-  GLCD_DrawString(0, 5*GLCD_Font_16x24.height, "        RTX         ");
+  GLCD_DrawString(0, 5*GLCD_Font_16x24.height, "        HID         ");
   GLCD_DrawString(0, 6*GLCD_Font_16x24.height, "  www.emthink.com   ");
+  
+  GLCD_DrawString(0, 8*GLCD_Font_16x24.height, "HID LEDs:           ");
+  GLCD_SetBackgroundColor(GLCD_COLOR_BLUE);           /* Set the Back Color */
+  GLCD_SetForegroundColor(GLCD_COLOR_GREEN);          /* Set the Text Color */
+  GLCD_DrawString(10*GLCD_Font_16x24.width, 8*GLCD_Font_16x24.height, "NO_LINK");
+  
+  USBD_Initialize(0);
+  USBD_Connect(0);
+  
+  Buttons_Initialize();
+  
+  mut_GLCD    = osMutexCreate(osMutex(mut_GLCD));
+  mail_LED    = osMailCreate(osMailQ(mail_LED),  NULL);
 
-  tid_blinky  = osThreadCreate(osThread(blinky), NULL);
+
+  tid_blinky      = osThreadCreate(osThread(blinky),      NULL);
+  tid_virtual_led = osThreadCreate(osThread(virtual_led), NULL);
+  tid_hid         = osThreadCreate(osThread(hid),         NULL);
   
   osThreadTerminate(osThreadGetId()); 
 }
-
 
