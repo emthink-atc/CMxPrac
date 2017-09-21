@@ -31,9 +31,13 @@ extern GLCD_FONT     GLCD_Font_16x24;
  *    My_Thread Macro
  *----------------------------------------------------------------------------*/
 #ifdef __MASTER_FILE
-#define My_Thread(name) extern void name (void const *argument);osThreadId tid_##name;osThreadDef(name, osPriorityNormal, 1, 0)
+#define My_Thread(name) \
+  extern void name (void const *argument); \
+  osThreadId tid_##name; \
+  osThreadDef(name, osPriorityNormal, 1, 0)
 #else
-#define My_Thread(name) extern osThreadId tid_##name
+#define My_Thread(name) \
+  extern osThreadId tid_##name
 #endif /* __MASTER_FILE */
 
 /*----------------------------------------------------------------------------*
