@@ -53,7 +53,12 @@ extern GLCD_FONT     GLCD_Font_16x24;
  *----------------------------------------------------------------------------*/
 #ifdef __MASTER_FILE
 #define My_Mutex(name) \
+<<<<<<< HEAD
   osMutexId name;osMutexDef(name)
+=======
+  osMutexId name; \
+  osMutexDef(name)
+>>>>>>> origin/b_prac6
 #else
 #define My_Mutex(name) \
   extern osMutexId name
@@ -71,7 +76,7 @@ typedef struct {
 #ifdef __MASTER_FILE
 #define My_Mail(name) \
   osMailQId name; \
-    osMailQDef(name, 16, T_MEAS)
+  osMailQDef(name, 16, T_MEAS)
 #else
 #define My_Mail(name) \
   extern osMailQId name
