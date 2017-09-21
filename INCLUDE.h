@@ -40,7 +40,7 @@ extern GLCD_FONT     GLCD_Font_16x24;
  *----------------------------------------------------------------------------*/
 #ifdef __MASTER_FILE
 #define My_Thread(name, stacksz) \
-  extern void name (void const *argument);
+  extern void name (void const *argument); \
   osThreadId tid_##name; \
   osThreadDef(name, osPriorityNormal, 1, stacksz)
 #else
@@ -53,7 +53,7 @@ extern GLCD_FONT     GLCD_Font_16x24;
  *----------------------------------------------------------------------------*/
 #ifdef __MASTER_FILE
 #define My_Mutex(name) \
-  osMutexId name;\
+  osMutexId name; \
   osMutexDef(name)
 #else
 #define My_Mutex(name) \
